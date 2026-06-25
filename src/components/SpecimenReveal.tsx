@@ -1,8 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import type { Transition } from "framer-motion";
 import Link from "next/link";
+import { useSyncExternalStore } from "react";
 import { ArrowRight } from "lucide-react";
 import type { Specimen } from "@/types/specimen";
 import { CopyLinkedInButton } from "@/components/CopyLinkedInButton";
@@ -12,12 +13,31 @@ type SpecimenRevealProps = {
   specimen: Specimen;
 };
 
+const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
+
 function transition(delay = 0, duration = 0.8): Transition {
   return { delay, duration, ease: "easeOut" };
 }
 
+function subscribeReducedMotion(onStoreChange: () => void) {
+  const mediaQuery = window.matchMedia(reducedMotionQuery);
+  mediaQuery.addEventListener("change", onStoreChange);
+
+  return () => {
+    mediaQuery.removeEventListener("change", onStoreChange);
+  };
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(reducedMotionQuery).matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
+
 export function SpecimenReveal({ specimen }: SpecimenRevealProps) {
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot);
   const short = reducedMotion ? 0 : 1;
 
   return (

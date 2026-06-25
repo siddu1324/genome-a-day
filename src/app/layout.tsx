@@ -10,6 +10,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Genome of the Day",
   description: "A cinematic science storytelling archive for strange biological signals.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
