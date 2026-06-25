@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 
 export const LOGBOOK_KEYS = {
   readSpecimens: "genome-day:read-specimens",
@@ -31,7 +31,10 @@ function canUseStorage() {
 }
 
 function todayKey(date = new Date()) {
-  return date.toISOString().slice(0, 10);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function daysBetween(start: string, end: string) {
@@ -160,12 +163,8 @@ export function useMarkSpecimenRead(specimenId: string) {
 export function useSaveSpecimen(specimenId: string) {
   const logbook = useLogbook();
 
-  const save = useCallback(() => {
-    saveSpecimen(specimenId);
-  }, [specimenId]);
-
   return {
-    save,
+    save: () => saveSpecimen(specimenId),
     isSaved: logbook.savedSpecimens.includes(specimenId),
     isRead: logbook.readSpecimens.includes(specimenId),
     logbook,

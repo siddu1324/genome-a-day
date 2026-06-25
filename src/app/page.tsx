@@ -1,15 +1,29 @@
+import { LogbookPreview } from "@/components/LogbookPreview";
+import { MetadataStrip } from "@/components/MetadataStrip";
+import { SpecimenChamber } from "@/components/SpecimenChamber";
+import { StoryPanel } from "@/components/StoryPanel";
+import { TopNav } from "@/components/TopNav";
+import { getTodaySpecimen } from "@/lib/specimenUtils";
+
 export default function Home() {
+  const specimen = getTodaySpecimen();
+
   return (
     <main className="min-h-screen bg-[var(--abyss)] text-[var(--bone)]">
-      <section className="mx-auto flex min-h-screen max-w-6xl items-center px-6 py-16">
+      <TopNav />
+      <SpecimenChamber specimen={specimen} />
+      <MetadataStrip specimen={specimen} />
+      <section className="mx-auto grid max-w-7xl gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
         <div>
-          <p className="font-mono text-xs uppercase tracking-[0.28em] text-[var(--ctenophore)]">
-            Genome of the Day
-          </p>
-          <h1 className="mt-4 max-w-3xl text-5xl font-semibold">
-            Axolotl limb regeneration signal initializing.
-          </h1>
+          <p className="font-mono text-xs text-[var(--ctenophore)]">TODAY&apos;S STORY</p>
+          <h2 className="text-balance mt-4 font-serif text-4xl leading-tight text-[var(--bone)] sm:text-5xl">
+            A living construction site under the skin
+          </h2>
+          <div className="mt-8">
+            <StoryPanel specimen={specimen} />
+          </div>
         </div>
+        <LogbookPreview specimen={specimen} />
       </section>
     </main>
   );
