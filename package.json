@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "verify:browser": "playwright test"
+    "verify:browser": "playwright test",
+    "visual:qa": "playwright test --config=playwright.visual.config.ts"
   },
   "dependencies": {
     "@fontsource/fraunces": "^5.2.9",
