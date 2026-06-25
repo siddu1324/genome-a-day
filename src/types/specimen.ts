@@ -1,0 +1,20 @@
+export type Specimen = {
+  id: string;
+  slug: string;
+  commonName: string;
+  scientificName: string;
+  type: "gene" | "organism" | "pathway" | "microbe" | "protein";
+  taxonomyLabel: string;
+  accession?: string;
+  refseq?: string;
+  genbank?: string;
+  discoveryDate: string;
+  habitat: string;
+  weirdnessScore: number;
+  story: string[];
+  hookLine: string;
+  whyItMatters: string;
+  linkedInPost: string;
+  tags: string[];
+  silhouette: "axolotl";
+};
