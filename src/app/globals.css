@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --abyss: #06090c;
+  --vantablack-water: #0d1117;
+  --ctenophore: #8ff7d6;
+  --siphonophore-violet: #5a3d8c;
+  --anglerfish-amber: #d9a85c;
+  --bone: #edeae2;
+  --muted-bone: #a9a59a;
+  --brine: #17201e;
+  --pressure-blue: #101926;
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+@theme inline {
+  --color-abyss: var(--abyss);
+  --color-vantablack-water: var(--vantablack-water);
+  --color-ctenophore: var(--ctenophore);
+  --color-siphonophore-violet: var(--siphonophore-violet);
+  --color-anglerfish-amber: var(--anglerfish-amber);
+  --color-bone: var(--bone);
+  --color-muted-bone: var(--muted-bone);
+  --color-brine: var(--brine);
+  --color-pressure-blue: var(--pressure-blue);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--abyss);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(143, 247, 214, 0.12), transparent 28rem),
+    linear-gradient(180deg, var(--pressure-blue), var(--abyss) 52%, #020304);
+  color: var(--bone);
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
