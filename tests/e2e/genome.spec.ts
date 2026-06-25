@@ -77,7 +77,7 @@ test("required routes render without framework overlays", async ({ page }) => {
   for (const route of ["/", "/specimen/axolotl-regeneration", "/logbook"]) {
     await page.goto(route);
     await expectHealthyPage(page);
-    await expect(page.getByText("Genome of the Day")).toBeVisible();
+    await expect(page.getByRole("link", { name: /Genome/ })).toBeVisible();
   }
 
   expect(consoleErrors).toEqual([]);

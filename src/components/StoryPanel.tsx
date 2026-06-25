@@ -7,17 +7,17 @@ type StoryPanelProps = {
 
 export function StoryPanel({ specimen, large = false }: StoryPanelProps) {
   return (
-    <article className="space-y-5">
+    <article className="max-w-3xl space-y-5">
       {specimen.story.map((line, index) => (
         <p
-          className={`text-pretty border-l border-[rgba(143,247,214,0.24)] pl-5 text-[var(--bone)] ${large ? "text-xl leading-9" : "text-lg leading-8"}`}
+          className={`text-pretty grid grid-cols-[2.75rem_1fr] gap-3 border-l border-[rgba(143,247,214,0.18)] pl-4 text-[var(--bone)] ${large ? "text-xl leading-9" : "text-lg leading-8"}`}
           key={line}
         >
-          <span className="mr-3 font-mono text-xs text-[var(--ctenophore)]">{String(index + 1).padStart(2, "0")}</span>
-          {line}
+          <span className="pt-1 font-mono text-[11px] text-[var(--ctenophore)]">FIELD {String(index + 1).padStart(2, "0")}</span>
+          <span>{line}</span>
         </p>
       ))}
-      <p className={`text-pretty font-serif text-[var(--anglerfish-amber)] ${large ? "text-3xl leading-10" : "text-2xl leading-9"}`}>
+      <p className={`text-pretty border-l border-[rgba(217,168,92,0.36)] pl-5 font-serif font-semibold text-[var(--anglerfish-amber)] ${large ? "text-3xl leading-10" : "text-2xl leading-9"}`}>
         {specimen.hookLine}
       </p>
     </article>

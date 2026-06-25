@@ -15,11 +15,12 @@ export function SharePanel({ specimen }: SharePanelProps) {
   }
 
   return (
-    <section className="border border-[rgba(217,168,92,0.24)] bg-[rgba(217,168,92,0.06)] p-5">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <section className="relative overflow-hidden border border-[rgba(217,168,92,0.24)] bg-[rgba(217,168,92,0.055)] p-5">
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(217,168,92,0.04)_1px,transparent_1px)] bg-[size:42px_100%]" />
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="font-mono text-xs text-[var(--anglerfish-amber)]">LINKEDIN FIELD NOTE</p>
-          <h2 className="mt-2 font-serif text-3xl text-[var(--bone)]">Share Copy</h2>
+          <h2 className="mt-2 font-serif text-3xl text-[var(--bone)]">Ready to Surface</h2>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
           <CopyLinkedInButton compact text={specimen.linkedInPost} />
@@ -33,9 +34,10 @@ export function SharePanel({ specimen }: SharePanelProps) {
           </button>
         </div>
       </div>
-      <pre className="mt-5 max-h-96 overflow-auto whitespace-pre-wrap border border-white/10 bg-[rgba(6,9,12,0.45)] p-4 font-sans text-sm leading-7 text-[var(--bone)]">
-        {specimen.linkedInPost}
-      </pre>
+      <div className="relative mt-5 border border-[rgba(217,168,92,0.18)] bg-[rgba(6,9,12,0.42)] p-4">
+        <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(217,168,92,0.72)]">Creator copy preview</p>
+        <p className="mt-4 whitespace-pre-wrap text-sm leading-7 text-[var(--bone)]">{specimen.linkedInPost}</p>
+      </div>
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, CircleDashed, RadioTower } from "lucide-react";
+import { ArrowRight, Check, Crosshair, RadioTower } from "lucide-react";
 import { useLogbook } from "@/lib/logbook";
 import type { Specimen } from "@/types/specimen";
 
@@ -9,7 +9,13 @@ type LogbookArchiveProps = {
   specimen: Specimen;
 };
 
-const futureSignals = ["unknown signal 002", "unknown signal 003", "unknown signal 004", "unknown signal 005"];
+const futureSignals = [
+  { id: "unknown signal 002", x: "22%", y: "28%" },
+  { id: "unknown signal 003", x: "68%", y: "24%" },
+  { id: "unknown signal 004", x: "78%", y: "72%" },
+  { id: "unknown signal 005", x: "30%", y: "78%" },
+  { id: "unknown signal 006", x: "51%", y: "53%" },
+];
 
 export function LogbookArchive({ specimen }: LogbookArchiveProps) {
   const logbook = useLogbook();
@@ -18,8 +24,8 @@ export function LogbookArchive({ specimen }: LogbookArchiveProps) {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
-      <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr]">
-        <div>
+      <div className="grid gap-8 lg:grid-cols-[0.68fr_1.32fr]">
+        <div className="lg:pt-8">
           <p className="font-mono text-xs text-[var(--ctenophore)]">PERSONAL FIELD ARCHIVE</p>
           <h1 className="text-balance mt-4 font-serif text-5xl leading-tight text-[var(--bone)] sm:text-6xl">
             Signals Recorded
@@ -27,32 +33,55 @@ export function LogbookArchive({ specimen }: LogbookArchiveProps) {
           <p className="text-pretty mt-5 max-w-xl text-lg leading-8 text-[var(--muted-bone)]">
             A local archive of specimens you have opened and saved in this browser.
           </p>
-          <div className="mt-8 grid grid-cols-3 gap-3">
-            <div className="border border-white/10 bg-white/[0.03] p-4">
-              <p className="font-mono text-xs text-[var(--muted-bone)]">Read</p>
-              <p className="mt-3 text-3xl text-[var(--bone)]">{logbook.readSpecimens.length}</p>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-4">
-              <p className="font-mono text-xs text-[var(--muted-bone)]">Saved</p>
-              <p className="mt-3 text-3xl text-[var(--bone)]">{logbook.savedSpecimens.length}</p>
-            </div>
-            <div className="border border-white/10 bg-white/[0.03] p-4">
-              <p className="font-mono text-xs text-[var(--muted-bone)]">Streak</p>
-              <p className="mt-3 text-3xl text-[var(--bone)]">{logbook.streak}</p>
+          <div className="mt-8 border-y border-[rgba(143,247,214,0.14)] py-4">
+            <div className="grid grid-cols-3 divide-x divide-white/10">
+              {[
+                ["Read", logbook.readSpecimens.length],
+                ["Saved", logbook.savedSpecimens.length],
+                ["Streak", logbook.streak],
+              ].map(([label, value]) => (
+                <div className="px-4 first:pl-0" key={label}>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--muted-bone)]">{label}</p>
+                  <p className="mt-2 text-3xl text-[var(--bone)]">{value}</p>
+                </div>
+              ))}
             </div>
           </div>
+          <p className="mt-6 max-w-sm font-mono text-xs leading-6 text-[var(--muted-bone)]">
+            LOCAL STORAGE ARCHIVE / READ AND SAVE STATES PERSIST IN THIS BROWSER.
+          </p>
         </div>
 
-        <div className="relative min-h-[520px] overflow-hidden border border-white/10 bg-[rgba(13,17,23,0.52)] p-5 sm:p-8">
+        <div className="relative min-h-[560px] overflow-hidden border border-[rgba(143,247,214,0.16)] bg-[rgba(13,17,23,0.5)] p-4 sm:p-8">
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(143,247,214,0.05)_1px,transparent_1px),linear-gradient(rgba(143,247,214,0.04)_1px,transparent_1px)] bg-[size:72px_72px]" />
-          <div className="relative">
-            <div className="flex items-start gap-4 border border-[rgba(143,247,214,0.24)] bg-[rgba(143,247,214,0.07)] p-5 shadow-[0_0_48px_rgba(143,247,214,0.08)]">
-              <span className="mt-1 flex h-12 w-12 shrink-0 items-center justify-center border border-[rgba(143,247,214,0.42)] bg-[rgba(143,247,214,0.12)] text-[var(--ctenophore)]">
+          <svg aria-hidden="true" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 760 560">
+            <path d="M142 150 L360 272 L516 132 L594 404 L236 436 L360 272 L516 132" fill="none" stroke="rgba(143,247,214,0.18)" strokeDasharray="5 9" />
+            <path d="M360 272 m-132 0 a132 132 0 1 0 264 0 a132 132 0 1 0 -264 0" fill="none" stroke="rgba(143,247,214,0.08)" />
+            <path d="M360 272 m-216 0 a216 216 0 1 0 432 0 a216 216 0 1 0 -432 0" fill="none" stroke="rgba(217,168,92,0.08)" />
+          </svg>
+
+          {futureSignals.map((signal) => (
+            <div
+              className="absolute -translate-x-1/2 -translate-y-1/2"
+              key={signal.id}
+              style={{ left: signal.x, top: signal.y }}
+            >
+              <span className="block h-4 w-4 border border-dashed border-[rgba(169,165,154,0.54)] bg-[rgba(169,165,154,0.05)]" />
+              <span className="mt-2 hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[rgba(169,165,154,0.62)] sm:block">
+                {signal.id}
+              </span>
+            </div>
+          ))}
+
+          <div className="absolute left-[48%] top-[48%] w-[min(88%,28rem)] -translate-x-1/2 -translate-y-1/2 border border-[rgba(143,247,214,0.32)] bg-[rgba(6,9,12,0.72)] p-5 shadow-[0_0_58px_rgba(143,247,214,0.13)] sm:left-[47%] sm:w-[27rem]">
+            <div className="flex items-start gap-4">
+              <span className="relative mt-1 flex h-12 w-12 shrink-0 items-center justify-center border border-[rgba(143,247,214,0.5)] bg-[rgba(143,247,214,0.12)] text-[var(--ctenophore)] shadow-[0_0_28px_rgba(143,247,214,0.25)]">
+                <span className="absolute inset-[-8px] border border-[rgba(217,168,92,0.22)]" />
                 {isSaved ? <Check aria-hidden="true" size={22} /> : <RadioTower aria-hidden="true" size={22} />}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-mono text-xs text-[var(--ctenophore)]">SPECIMEN 001</p>
-                <h2 className="mt-2 font-serif text-3xl text-[var(--bone)]">{specimen.commonName}</h2>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--ctenophore)]">SPECIMEN 001 / CURRENT</p>
+                <h2 className="mt-2 font-serif text-3xl leading-tight text-[var(--bone)]">{specimen.commonName}</h2>
                 <p className="mt-2 text-sm italic text-[var(--muted-bone)]">{specimen.scientificName}</p>
                 <p className="mt-4 text-sm text-[var(--muted-bone)]">
                   {isSaved ? "Saved specimen" : isRead ? "Read specimen" : "Unread specimen"}
@@ -63,16 +92,11 @@ export function LogbookArchive({ specimen }: LogbookArchiveProps) {
                 </Link>
               </div>
             </div>
+          </div>
 
-            <div className="mt-7 grid gap-4 sm:grid-cols-2">
-              {futureSignals.map((signal) => (
-                <div className="border border-dashed border-white/10 bg-white/[0.025] p-5 opacity-65" key={signal}>
-                  <CircleDashed className="text-[var(--muted-bone)]" aria-hidden="true" size={22} />
-                  <p className="mt-4 font-mono text-xs text-[var(--muted-bone)]">{signal}</p>
-                  <p className="mt-2 text-sm text-[var(--muted-bone)]">Unknown signal</p>
-                </div>
-              ))}
-            </div>
+          <div className="absolute bottom-4 right-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-[rgba(217,168,92,0.72)]">
+            <Crosshair aria-hidden="true" size={14} />
+            Today pulse
           </div>
         </div>
       </div>
