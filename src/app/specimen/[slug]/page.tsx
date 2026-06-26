@@ -4,6 +4,7 @@ import { MetadataStrip } from "@/components/MetadataStrip";
 import { ReadMarker } from "@/components/ReadMarker";
 import { SaveSpecimenButton } from "@/components/SaveSpecimenButton";
 import { SharePanel } from "@/components/SharePanel";
+import { SourceEvidencePanel } from "@/components/SourceEvidencePanel";
 import { StoryPanel } from "@/components/StoryPanel";
 import { TopNav } from "@/components/TopNav";
 import { getAllSpecimens, getSpecimenBySlug } from "@/lib/specimenUtils";
@@ -101,6 +102,7 @@ export default async function SpecimenPage({ params }: SpecimenPageProps) {
               ))}
             </div>
           </div>
+          <SourceEvidencePanel specimen={specimen} />
           <SharePanel specimen={specimen} />
         </div>
       </section>

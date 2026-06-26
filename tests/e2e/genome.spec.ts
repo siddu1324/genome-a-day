@@ -62,6 +62,9 @@ test("homepage, save, copy, detail, and logbook loop works", async ({ page }) =>
   await expect(page).toHaveURL(/\/specimen\/axolotl-regeneration$/);
   await expectHealthyPage(page);
   await expect(page.getByText("WHY IT MATTERS")).toBeVisible();
+  await expect(page.getByText("SOURCES / FIELD EVIDENCE")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Evidence Ledger" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Open source: Cells keep a memory/ })).toBeVisible();
   await expect(page.getByRole("button", { name: "Saved" })).toBeVisible();
 
   await page.goto("/logbook");
