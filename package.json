@@ -7,7 +7,10 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint .",
+    "test": "vitest run tests/unit",
     "typecheck": "tsc --noEmit",
+    "validate:specimens": "tsx scripts/validate-specimens.ts",
+    "verify": "npm run validate:specimens && npm run test && npm run lint && npm run typecheck",
     "verify:browser": "playwright test",
     "visual:qa": "playwright test --config=playwright.visual.config.ts"
   },
@@ -19,7 +22,8 @@
     "lucide-react": "^1.21.0",
     "next": "^16.2.9",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
@@ -31,6 +35,8 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.9",
     "tailwindcss": "^4.3.1",
-    "typescript": "^6.0.3"
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
   }
 }
