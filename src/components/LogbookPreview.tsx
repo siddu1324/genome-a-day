@@ -7,9 +7,19 @@ import type { Specimen } from "@/types/specimen";
 
 type LogbookPreviewProps = {
   specimen: Specimen;
+  specimenNumber: number;
+  specimens: Specimen[];
 };
 
-export function LogbookPreview({ specimen }: LogbookPreviewProps) {
+const previewPositions = [
+  { left: "21%", top: "66%" },
+  { left: "44%", top: "43%" },
+  { left: "69%", top: "63%" },
+  { left: "83%", top: "34%" },
+  { left: "31%", top: "25%" },
+] as const;
+
+export function LogbookPreview({ specimen, specimenNumber, specimens }: LogbookPreviewProps) {
   const logbook = useLogbook();
   const isRead = logbook.readSpecimens.includes(specimen.id);
   const isSaved = logbook.savedSpecimens.includes(specimen.id);
@@ -31,27 +41,28 @@ export function LogbookPreview({ specimen }: LogbookPreviewProps) {
           <path d="M70 138 L150 92 L236 132 L282 74" stroke="rgba(143,247,214,0.18)" strokeDasharray="4 7" />
           <path d="M150 92 L110 52 M236 132 L202 168" stroke="rgba(217,168,92,0.13)" strokeDasharray="3 8" />
         </svg>
-        {[
-          { left: "21%", top: "66%", active: false },
-          { left: "44%", top: "43%", active: true },
-          { left: "69%", top: "63%", active: false },
-          { left: "83%", top: "34%", active: false },
-          { left: "31%", top: "25%", active: false },
-        ].map((node, index) => (
-          <span
-            className={`absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 border ${
-              node.active
-                ? "border-[var(--ctenophore)] bg-[var(--ctenophore)] shadow-[0_0_24px_rgba(143,247,214,0.85)]"
-                : "border-[rgba(169,165,154,0.52)] bg-[rgba(169,165,154,0.08)]"
+        {specimens.slice(0, previewPositions.length).map((entry, index) => {
+          const node = previewPositions[index];
+          const active = entry.id === specimen.id;
+
+          return (
+            <Link
+              aria-label={`Open ${entry.commonName}`}
+              className={`absolute h-3 w-3 -translate-x-1/2 -translate-y-1/2 border ${
+                active
+                  ? "border-[var(--ctenophore)] bg-[var(--ctenophore)] shadow-[0_0_24px_rgba(143,247,214,0.85)]"
+                  : "border-[rgba(169,165,154,0.52)] bg-[rgba(169,165,154,0.08)] hover:border-[var(--ctenophore)]"
             }`}
-            key={`${node.left}-${node.top}`}
-            style={{ left: node.left, top: node.top }}
-          >
-            <span className="sr-only">{index === 1 ? specimen.commonName : "Unknown signal"}</span>
-          </span>
-        ))}
+              href={`/specimen/${entry.slug}`}
+              key={entry.id}
+              style={{ left: node.left, top: node.top }}
+            />
+          );
+        })}
         <div className="absolute bottom-4 left-4 right-4 border border-[rgba(143,247,214,0.18)] bg-[rgba(6,9,12,0.58)] p-3">
-          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--ctenophore)]">SPECIMEN 001</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--ctenophore)]">
+            SPECIMEN {String(specimenNumber).padStart(3, "0")}
+          </p>
           <p className="mt-1 text-sm font-semibold text-[var(--bone)]">{specimen.commonName}</p>
           <p className="mt-1 text-xs text-[var(--muted-bone)]">{status}</p>
         </div>

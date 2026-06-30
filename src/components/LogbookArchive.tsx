@@ -6,21 +6,23 @@ import { useLogbook } from "@/lib/logbook";
 import type { Specimen } from "@/types/specimen";
 
 type LogbookArchiveProps = {
-  specimen: Specimen;
+  activeSpecimen: Specimen;
+  specimens: Specimen[];
 };
 
-const futureSignals = [
-  { id: "unknown signal 002", x: "22%", y: "28%" },
-  { id: "unknown signal 003", x: "68%", y: "24%" },
-  { id: "unknown signal 004", x: "78%", y: "72%" },
-  { id: "unknown signal 005", x: "30%", y: "78%" },
-  { id: "unknown signal 006", x: "51%", y: "53%" },
-];
+const archivePositions = [
+  { x: "22%", y: "28%" },
+  { x: "68%", y: "24%" },
+  { x: "78%", y: "72%" },
+  { x: "30%", y: "78%" },
+  { x: "51%", y: "53%" },
+] as const;
 
-export function LogbookArchive({ specimen }: LogbookArchiveProps) {
+export function LogbookArchive({ activeSpecimen, specimens }: LogbookArchiveProps) {
   const logbook = useLogbook();
-  const isRead = logbook.readSpecimens.includes(specimen.id);
-  const isSaved = logbook.savedSpecimens.includes(specimen.id);
+  const isRead = logbook.readSpecimens.includes(activeSpecimen.id);
+  const isSaved = logbook.savedSpecimens.includes(activeSpecimen.id);
+  const activeSpecimenNumber = specimens.findIndex((specimen) => specimen.id === activeSpecimen.id) + 1;
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:py-16">
@@ -60,18 +62,37 @@ export function LogbookArchive({ specimen }: LogbookArchiveProps) {
             <path d="M360 272 m-216 0 a216 216 0 1 0 432 0 a216 216 0 1 0 -432 0" fill="none" stroke="rgba(217,168,92,0.08)" />
           </svg>
 
-          {futureSignals.map((signal) => (
-            <div
-              className="absolute -translate-x-1/2 -translate-y-1/2"
-              key={signal.id}
-              style={{ left: signal.x, top: signal.y }}
-            >
-              <span className="block h-4 w-4 border border-dashed border-[rgba(169,165,154,0.54)] bg-[rgba(169,165,154,0.05)]" />
-              <span className="mt-2 hidden whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[rgba(169,165,154,0.62)] sm:block">
-                {signal.id}
-              </span>
-            </div>
-          ))}
+          {specimens.slice(0, archivePositions.length).map((entry, index) => {
+            const position = archivePositions[index];
+            const active = entry.id === activeSpecimen.id;
+            const saved = logbook.savedSpecimens.includes(entry.id);
+            const read = logbook.readSpecimens.includes(entry.id);
+
+            return (
+              <Link
+                aria-label={`Open archived specimen ${entry.commonName}`}
+                className="absolute -translate-x-1/2 -translate-y-1/2"
+                href={`/specimen/${entry.slug}`}
+                key={entry.id}
+                style={{ left: position.x, top: position.y }}
+              >
+                <span
+                  className={`block h-4 w-4 border ${
+                    active
+                      ? "border-[var(--ctenophore)] bg-[var(--ctenophore)] shadow-[0_0_28px_rgba(143,247,214,0.85)]"
+                      : saved
+                        ? "border-[rgba(217,168,92,0.8)] bg-[rgba(217,168,92,0.16)]"
+                        : read
+                          ? "border-[rgba(143,247,214,0.6)] bg-[rgba(143,247,214,0.09)]"
+                          : "border-dashed border-[rgba(169,165,154,0.54)] bg-[rgba(169,165,154,0.05)]"
+                  }`}
+                />
+                <span className="mt-2 hidden max-w-32 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[rgba(169,165,154,0.72)] sm:block">
+                  {String(index + 1).padStart(3, "0")} / {entry.commonName}
+                </span>
+              </Link>
+            );
+          })}
 
           <div className="absolute left-[48%] top-[48%] w-[min(88%,28rem)] -translate-x-1/2 -translate-y-1/2 border border-[rgba(143,247,214,0.32)] bg-[rgba(6,9,12,0.72)] p-5 shadow-[0_0_58px_rgba(143,247,214,0.13)] sm:left-[47%] sm:w-[27rem]">
             <div className="flex items-start gap-4">
@@ -80,13 +101,15 @@ export function LogbookArchive({ specimen }: LogbookArchiveProps) {
                 {isSaved ? <Check aria-hidden="true" size={22} /> : <RadioTower aria-hidden="true" size={22} />}
               </span>
               <div className="min-w-0 flex-1">
-                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--ctenophore)]">SPECIMEN 001 / CURRENT</p>
-                <h2 className="mt-2 font-serif text-3xl leading-tight text-[var(--bone)]">{specimen.commonName}</h2>
-                <p className="mt-2 text-sm italic text-[var(--muted-bone)]">{specimen.scientificName}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--ctenophore)]">
+                  SPECIMEN {String(activeSpecimenNumber).padStart(3, "0")} / CURRENT
+                </p>
+                <h2 className="mt-2 font-serif text-3xl leading-tight text-[var(--bone)]">{activeSpecimen.commonName}</h2>
+                <p className="mt-2 text-sm italic text-[var(--muted-bone)]">{activeSpecimen.scientificName}</p>
                 <p className="mt-4 text-sm text-[var(--muted-bone)]">
                   {isSaved ? "Saved specimen" : isRead ? "Read specimen" : "Unread specimen"}
                 </p>
-                <Link className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--ctenophore)]" href={`/specimen/${specimen.slug}`}>
+                <Link className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--ctenophore)]" href={`/specimen/${activeSpecimen.slug}`}>
                   Review specimen
                   <ArrowRight aria-hidden="true" size={16} />
                 </Link>

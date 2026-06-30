@@ -6,7 +6,7 @@ const phase = process.env.VISUAL_QA_PHASE ?? "before";
 const outputRoot = path.join(process.cwd(), "docs", "visual-qa", phase);
 
 const routes = [
-  { name: "home", path: "/", readyText: "Axolotl limb regeneration" },
+  { name: "home", path: "/", readyText: "ACTIVE SIGNAL" },
   { name: "specimen", path: "/specimen/axolotl-regeneration", readyText: "WHY IT MATTERS" },
   { name: "logbook", path: "/logbook", readyText: "Signals Recorded" },
 ] as const;

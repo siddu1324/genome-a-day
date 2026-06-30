@@ -1,5 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { specimens } from "../../src/data/specimens";
+import { getSpecimenForDate, getSpecimenNumber } from "../../src/lib/specimenUtils";
 import { assertValidSpecimens } from "../../src/lib/specimenSchema";
 import type { Specimen } from "../../src/types/specimen";
 
@@ -47,6 +48,20 @@ describe("specimen schema validation", () => {
     const serializedSpecimens = JSON.stringify(specimens);
 
     expect(serializedSpecimens).not.toMatch(/TODO|placeholder|fake|unknown accession|TBD/i);
+  });
+
+  test("daily rotation advances across the expanded specimen set", () => {
+    expect(getSpecimenForDate(new Date("2026-06-26T12:00:00Z")).slug).toBe("axolotl-regeneration");
+    expect(getSpecimenForDate(new Date("2026-06-27T12:00:00Z")).slug).toBe("petase-plastic-digestion");
+    expect(getSpecimenForDate(new Date("2026-06-28T12:00:00Z")).slug).toBe("gfp-bioimaging");
+    expect(getSpecimenForDate(new Date("2026-06-29T12:00:00Z")).slug).toBe("dsup-dna-protection");
+    expect(getSpecimenForDate(new Date("2026-06-30T12:00:00Z")).slug).toBe("deinococcus-radiodurans-repair");
+  });
+
+  test("specimen numbering follows archive order", () => {
+    specimens.forEach((specimen, index) => {
+      expect(getSpecimenNumber(specimen)).toBe(index + 1);
+    });
   });
 
   test("invalid source references fail", () => {

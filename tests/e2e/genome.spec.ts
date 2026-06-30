@@ -1,6 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
 
-const specimenId = "axolotl-regeneration";
+const specimenIds: string[] = [
+  "axolotl-regeneration",
+  "petase-plastic-digestion",
+  "gfp-bioimaging",
+  "dsup-dna-protection",
+  "deinococcus-radiodurans-repair",
+];
 
 function captureConsoleErrors(page: Page) {
   const errors: string[] = [];
@@ -38,12 +44,24 @@ test("homepage, save, copy, detail, and logbook loop works", async ({ page }) =>
 
   await page.goto("/");
   await expectHealthyPage(page);
-  await expect(page.getByRole("heading", { name: "Axolotl limb regeneration" })).toBeVisible();
-  await expect(page.getByText("Some organisms heal. Axolotls negotiate with injury.", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("TODAY'S STORY")).toBeVisible();
+  await expect(page.getByText(/SPECIMEN \d{3} \/ ACTIVE SIGNAL/)).toBeVisible();
   await expect(page.getByRole("link", { name: /Go Deeper/ })).toBeVisible();
 
   await expect
-    .poll(() => page.evaluate((id) => JSON.parse(window.localStorage.getItem("genome-day:read-specimens") || "[]").includes(id), specimenId))
+    .poll(() => page.evaluate(() => JSON.parse(window.localStorage.getItem("genome-day:read-specimens") || "[]").length))
+    .toBeGreaterThan(0);
+
+  const activeDetailHref = await page.getByRole("link", { name: /Go Deeper/ }).getAttribute("href");
+  expect(activeDetailHref).toMatch(/^\/specimen\/.+/);
+
+  await expect
+    .poll(() =>
+      page.evaluate((ids) => {
+        const readSpecimens = JSON.parse(window.localStorage.getItem("genome-day:read-specimens") || "[]") as string[];
+        return readSpecimens.some((id) => ids.includes(id));
+      }, specimenIds),
+    )
     .toBe(true);
 
   await page.getByRole("button", { name: "Save to Logbook" }).click();
@@ -52,35 +70,36 @@ test("homepage, save, copy, detail, and logbook loop works", async ({ page }) =>
   await page.reload();
   await expectHealthyPage(page);
   await expect(page.getByText("Saved to your logbook")).toBeVisible();
-  await expect(page.evaluate((id) => JSON.parse(window.localStorage.getItem("genome-day:saved-specimens") || "[]").includes(id), specimenId)).resolves.toBe(true);
+  await expect(page.evaluate(() => JSON.parse(window.localStorage.getItem("genome-day:saved-specimens") || "[]").length)).resolves.toBeGreaterThan(0);
 
   await page.getByRole("button", { name: "Copy LinkedIn Post" }).first().click();
   await expect(page.getByRole("button", { name: "Copied" })).toBeVisible();
-  await expect(page.evaluate(() => navigator.clipboard.readText())).resolves.toContain("Axolotls do something biology keeps trying to explain");
+  await expect(page.evaluate(() => navigator.clipboard.readText())).resolves.toContain("#");
 
   await page.getByRole("link", { name: /Go Deeper/ }).click();
-  await expect(page).toHaveURL(/\/specimen\/axolotl-regeneration$/);
+  await expect(page).toHaveURL(/\/specimen\/[^/]+$/);
   await expectHealthyPage(page);
   await expect(page.getByText("WHY IT MATTERS")).toBeVisible();
   await expect(page.getByText("SOURCES / FIELD EVIDENCE")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Evidence Ledger" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Open source: Cells keep a memory/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Open source:/ }).first()).toBeVisible();
   await expect(page.getByRole("button", { name: "Saved" })).toBeVisible();
 
   await page.goto("/logbook");
   await expectHealthyPage(page);
   await expect(page.getByRole("heading", { name: "Signals Recorded" })).toBeVisible();
   await expect(page.getByText("Saved specimen")).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Open archived specimen / })).toHaveCount(5);
   expect(consoleErrors).toEqual([]);
 });
 
 test("required routes render without framework overlays", async ({ page }) => {
   const consoleErrors = captureConsoleErrors(page);
 
-  for (const route of ["/", "/specimen/axolotl-regeneration", "/logbook"]) {
+  for (const route of ["/", "/specimen", "/logbook", ...specimenIds.map((id) => `/specimen/${id}`)]) {
     await page.goto(route);
     await expectHealthyPage(page);
-    await expect(page.getByRole("link", { name: /Genome/ })).toBeVisible();
+    await expect(page.locator("header").getByRole("link", { name: /Genome/ })).toBeVisible();
   }
 
   expect(consoleErrors).toEqual([]);
@@ -92,8 +111,8 @@ test("reduced motion context still renders the reveal content", async ({ page },
 
   await page.goto("/");
   await expectHealthyPage(page);
-  await expect(page.getByRole("heading", { name: "Axolotl limb regeneration" })).toBeVisible();
-  await expect(page.getByText("The strangest part is not that the limb returns.").first()).toBeVisible();
+  await expect(page.getByRole("link", { name: /Go Deeper/ })).toBeVisible();
+  await expect(page.getByText(/SPECIMEN \d{3} \/ ACTIVE SIGNAL/)).toBeVisible();
   await expect(page.evaluate(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches)).resolves.toBe(true);
   expect(consoleErrors).toEqual([]);
 });

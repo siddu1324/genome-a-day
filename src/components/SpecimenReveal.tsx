@@ -8,9 +8,11 @@ import { ArrowRight } from "lucide-react";
 import type { Specimen } from "@/types/specimen";
 import { CopyLinkedInButton } from "@/components/CopyLinkedInButton";
 import { SaveSpecimenButton } from "@/components/SaveSpecimenButton";
+import { SpecimenSignalGlyph } from "@/components/SpecimenGlyph";
 
 type SpecimenRevealProps = {
   specimen: Specimen;
+  specimenNumber: number;
 };
 
 const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
@@ -36,9 +38,10 @@ function getReducedMotionServerSnapshot() {
   return false;
 }
 
-export function SpecimenReveal({ specimen }: SpecimenRevealProps) {
+export function SpecimenReveal({ specimen, specimenNumber }: SpecimenRevealProps) {
   const reducedMotion = useSyncExternalStore(subscribeReducedMotion, getReducedMotionSnapshot, getReducedMotionServerSnapshot);
   const short = reducedMotion ? 0 : 1;
+  const specimenLabel = `SPECIMEN ${String(specimenNumber).padStart(3, "0")}`;
 
   return (
     <div
@@ -54,76 +57,14 @@ export function SpecimenReveal({ specimen }: SpecimenRevealProps) {
         <div className="absolute inset-x-10 top-10 h-px bg-[linear-gradient(90deg,transparent,rgba(143,247,214,0.56),transparent)] sm:inset-x-16" />
         <div className="absolute bottom-10 left-10 h-10 w-10 border-b border-l border-[rgba(217,168,92,0.34)] sm:bottom-14 sm:left-14" />
         <div className="absolute right-10 top-10 h-10 w-10 border-r border-t border-[rgba(143,247,214,0.34)] sm:right-14 sm:top-14" />
-        <motion.svg
-          aria-label="Axolotl silhouette"
-          className="relative h-auto w-full max-w-[610px] drop-shadow-[0_0_34px_rgba(143,247,214,0.5)]"
-          fill="none"
+        <motion.div
           initial={reducedMotion ? false : { opacity: 0.36 }}
           animate={{ opacity: 1 }}
           transition={transition(0.3 * short, 1.2 * short)}
-          viewBox="0 0 680 360"
+          className="relative w-full max-w-[610px] drop-shadow-[0_0_34px_rgba(143,247,214,0.5)]"
         >
-          <defs>
-            <filter id="axolotlGlow" x="-30%" y="-40%" width="160%" height="180%">
-              <feGaussianBlur stdDeviation="7" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <motion.path
-            d="M170 176 C222 104 381 99 475 149 C528 178 548 224 508 256 C452 301 279 295 188 226 C157 203 147 187 170 176 Z"
-            fill="rgba(143,247,214,0.075)"
-            filter="url(#axolotlGlow)"
-            initial={reducedMotion ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={transition(2.1 * short, 1 * short)}
-          />
-          {[
-            "M158 177 C220 105 380 98 476 148 C532 177 550 224 507 257 C448 303 274 294 187 226 C154 200 141 187 158 177 Z",
-            "M498 171 C558 137 609 151 628 194 C590 190 548 203 510 228",
-            "M238 187 C296 153 394 156 459 190",
-            "M217 221 C188 242 156 253 119 260",
-            "M271 252 C249 287 219 308 181 316",
-            "M393 251 C414 288 446 310 489 318",
-            "M257 138 C233 113 210 88 199 56",
-            "M239 146 C207 132 178 114 153 84",
-            "M222 159 C185 155 150 146 113 125",
-            "M472 139 C495 113 512 86 523 55",
-            "M490 153 C526 142 558 126 585 93",
-            "M501 172 C541 172 577 164 614 143",
-          ].map((path, index) => (
-            <motion.path
-              d={path}
-              initial={reducedMotion ? false : { pathLength: 0, opacity: 0.1 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              key={path}
-              stroke={index < 6 ? "rgba(143,247,214,0.92)" : "rgba(217,168,92,0.82)"}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={index === 0 ? 5 : index === 2 ? 2.5 : 4}
-              transition={transition((0.2 + index * 0.12) * short, 1.8 * short)}
-            />
-          ))}
-          <motion.path
-            d="M236 204 C300 229 394 232 464 207"
-            initial={reducedMotion ? false : { pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.56 }}
-            stroke="rgba(237,234,226,0.36)"
-            strokeLinecap="round"
-            strokeWidth="2"
-            transition={transition(1.7 * short, 1.5 * short)}
-          />
-          <motion.circle
-            animate={{ opacity: [0.4, 1, 0.55] }}
-            cx="285"
-            cy="158"
-            fill="var(--ctenophore)"
-            r="5"
-            transition={reducedMotion ? { duration: 0 } : { duration: 3, repeat: Infinity, repeatType: "mirror" }}
-          />
-        </motion.svg>
+          <SpecimenSignalGlyph specimen={specimen} className="h-auto w-full" />
+        </motion.div>
       </div>
 
       <div className="mx-auto max-w-[34rem] lg:mx-0">
@@ -133,7 +74,7 @@ export function SpecimenReveal({ specimen }: SpecimenRevealProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={transition(1.8 * short, 0.8 * short)}
         >
-          SPECIMEN 001 / ACTIVE SIGNAL
+          {specimenLabel} / ACTIVE SIGNAL
         </motion.p>
         <motion.h1
           className="text-balance mt-4 max-w-[12ch] font-serif text-[clamp(3.2rem,6.2vw,5.35rem)] font-semibold leading-[0.98] text-[var(--bone)]"

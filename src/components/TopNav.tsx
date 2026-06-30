@@ -11,7 +11,7 @@ type NavLink = {
 };
 
 const navLinks: NavLink[] = [
-  { href: "/specimen/axolotl-regeneration", label: "Specimen" },
+  { href: "/specimen", label: "Specimen" },
   { href: "/logbook", label: "Logbook", icon: BookOpen },
 ];
 
