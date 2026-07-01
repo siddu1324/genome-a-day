@@ -13,8 +13,8 @@ describe("specimen schema validation", () => {
     expect(() => assertValidSpecimens(specimens)).not.toThrow();
   });
 
-  test("Stage 2B has five controlled specimen records", () => {
-    expect(specimens).toHaveLength(5);
+  test("Stage 2C has ten controlled specimen records", () => {
+    expect(specimens).toHaveLength(10);
   });
 
   test("slugs are unique", () => {
@@ -56,6 +56,11 @@ describe("specimen schema validation", () => {
     expect(getSpecimenForDate(new Date("2026-06-28T12:00:00Z")).slug).toBe("gfp-bioimaging");
     expect(getSpecimenForDate(new Date("2026-06-29T12:00:00Z")).slug).toBe("dsup-dna-protection");
     expect(getSpecimenForDate(new Date("2026-06-30T12:00:00Z")).slug).toBe("deinococcus-radiodurans-repair");
+    expect(getSpecimenForDate(new Date("2026-07-01T12:00:00Z")).slug).toBe("notothenioid-antifreeze-proteins");
+    expect(getSpecimenForDate(new Date("2026-07-02T12:00:00Z")).slug).toBe("horseshoe-crab-lal");
+    expect(getSpecimenForDate(new Date("2026-07-03T12:00:00Z")).slug).toBe("mimivirus-giant-virus");
+    expect(getSpecimenForDate(new Date("2026-07-04T12:00:00Z")).slug).toBe("electric-eel-sodium-channels");
+    expect(getSpecimenForDate(new Date("2026-07-05T12:00:00Z")).slug).toBe("corpse-flower-thermogenesis");
   });
 
   test("specimen numbering follows archive order", () => {

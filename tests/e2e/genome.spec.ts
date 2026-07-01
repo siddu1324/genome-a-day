@@ -6,6 +6,11 @@ const specimenIds: string[] = [
   "gfp-bioimaging",
   "dsup-dna-protection",
   "deinococcus-radiodurans-repair",
+  "notothenioid-antifreeze-proteins",
+  "horseshoe-crab-lal",
+  "mimivirus-giant-virus",
+  "electric-eel-sodium-channels",
+  "corpse-flower-thermogenesis",
 ];
 
 function captureConsoleErrors(page: Page) {
@@ -89,7 +94,7 @@ test("homepage, save, copy, detail, and logbook loop works", async ({ page }) =>
   await expectHealthyPage(page);
   await expect(page.getByRole("heading", { name: "Signals Recorded" })).toBeVisible();
   await expect(page.getByText("Saved specimen")).toBeVisible();
-  await expect(page.getByRole("link", { name: /^Open archived specimen / })).toHaveCount(5);
+  await expect(page.getByRole("link", { name: /^Open archived specimen / })).toHaveCount(10);
   expect(consoleErrors).toEqual([]);
 });
 
