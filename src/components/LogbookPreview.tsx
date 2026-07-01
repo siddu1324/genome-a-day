@@ -12,11 +12,16 @@ type LogbookPreviewProps = {
 };
 
 const previewPositions = [
-  { left: "21%", top: "66%" },
-  { left: "44%", top: "43%" },
-  { left: "69%", top: "63%" },
-  { left: "83%", top: "34%" },
-  { left: "31%", top: "25%" },
+  { left: "14%", top: "24%" },
+  { left: "33%", top: "15%" },
+  { left: "55%", top: "19%" },
+  { left: "78%", top: "27%" },
+  { left: "87%", top: "50%" },
+  { left: "74%", top: "74%" },
+  { left: "52%", top: "84%" },
+  { left: "30%", top: "76%" },
+  { left: "13%", top: "57%" },
+  { left: "21%", top: "39%" },
 ] as const;
 
 export function LogbookPreview({ specimen, specimenNumber, specimens }: LogbookPreviewProps) {
@@ -38,8 +43,8 @@ export function LogbookPreview({ specimen, specimenNumber, specimens }: LogbookP
 
       <div className="relative mt-6 h-52 border border-[rgba(143,247,214,0.13)] bg-[rgba(6,9,12,0.28)]">
         <svg aria-hidden="true" className="absolute inset-0 h-full w-full" viewBox="0 0 340 210">
-          <path d="M70 138 L150 92 L236 132 L282 74" stroke="rgba(143,247,214,0.18)" strokeDasharray="4 7" />
-          <path d="M150 92 L110 52 M236 132 L202 168" stroke="rgba(217,168,92,0.13)" strokeDasharray="3 8" />
+          <path d="M48 50 L112 32 L187 40 L265 57 L296 105 L252 155 L177 176 L102 160 L44 120 L71 82 Z" fill="none" stroke="rgba(143,247,214,0.18)" strokeDasharray="4 7" />
+          <path d="M48 50 L187 40 M112 32 L265 57 M296 105 L177 176 M252 155 L44 120" stroke="rgba(217,168,92,0.13)" strokeDasharray="3 8" />
         </svg>
         {specimens.slice(0, previewPositions.length).map((entry, index) => {
           const node = previewPositions[index];

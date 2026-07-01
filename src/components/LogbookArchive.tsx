@@ -11,11 +11,16 @@ type LogbookArchiveProps = {
 };
 
 const archivePositions = [
-  { x: "22%", y: "28%" },
-  { x: "68%", y: "24%" },
-  { x: "78%", y: "72%" },
-  { x: "30%", y: "78%" },
-  { x: "51%", y: "53%" },
+  { x: "16%", y: "18%" },
+  { x: "38%", y: "14%" },
+  { x: "62%", y: "16%" },
+  { x: "84%", y: "24%" },
+  { x: "89%", y: "52%" },
+  { x: "76%", y: "78%" },
+  { x: "54%", y: "88%" },
+  { x: "31%", y: "84%" },
+  { x: "13%", y: "63%" },
+  { x: "10%", y: "38%" },
 ] as const;
 
 export function LogbookArchive({ activeSpecimen, specimens }: LogbookArchiveProps) {
@@ -57,7 +62,8 @@ export function LogbookArchive({ activeSpecimen, specimens }: LogbookArchiveProp
         <div className="relative min-h-[560px] overflow-hidden border border-[rgba(143,247,214,0.16)] bg-[rgba(13,17,23,0.5)] p-4 sm:p-8">
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(143,247,214,0.05)_1px,transparent_1px),linear-gradient(rgba(143,247,214,0.04)_1px,transparent_1px)] bg-[size:72px_72px]" />
           <svg aria-hidden="true" className="absolute inset-0 h-full w-full" preserveAspectRatio="none" viewBox="0 0 760 560">
-            <path d="M142 150 L360 272 L516 132 L594 404 L236 436 L360 272 L516 132" fill="none" stroke="rgba(143,247,214,0.18)" strokeDasharray="5 9" />
+            <path d="M122 101 L289 78 L471 90 L638 134 L676 291 L578 437 L410 493 L236 470 L99 353 L76 213 Z" fill="none" stroke="rgba(143,247,214,0.18)" strokeDasharray="5 9" />
+            <path d="M122 101 L471 90 M289 78 L638 134 M676 291 L410 493 M578 437 L99 353 M76 213 L236 470" fill="none" stroke="rgba(217,168,92,0.12)" strokeDasharray="4 10" />
             <path d="M360 272 m-132 0 a132 132 0 1 0 264 0 a132 132 0 1 0 -264 0" fill="none" stroke="rgba(143,247,214,0.08)" />
             <path d="M360 272 m-216 0 a216 216 0 1 0 432 0 a216 216 0 1 0 -432 0" fill="none" stroke="rgba(217,168,92,0.08)" />
           </svg>
@@ -87,7 +93,7 @@ export function LogbookArchive({ activeSpecimen, specimens }: LogbookArchiveProp
                           : "border-dashed border-[rgba(169,165,154,0.54)] bg-[rgba(169,165,154,0.05)]"
                   }`}
                 />
-                <span className="mt-2 hidden max-w-32 whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[rgba(169,165,154,0.72)] sm:block">
+                <span className="mt-2 hidden w-36 truncate whitespace-nowrap font-mono text-[10px] uppercase tracking-[0.12em] text-[rgba(169,165,154,0.72)] sm:block">
                   {String(index + 1).padStart(3, "0")} / {entry.commonName}
                 </span>
               </Link>

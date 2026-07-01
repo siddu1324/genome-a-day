@@ -87,6 +87,8 @@ test("homepage, save, copy, detail, and logbook loop works", async ({ page }) =>
   await expect(page.getByText("WHY IT MATTERS")).toBeVisible();
   await expect(page.getByText("SOURCES / FIELD EVIDENCE")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Evidence Ledger" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Archive Neighbors" })).toBeVisible();
+  await expect(page.getByRole("link", { name: /^Open related specimen / })).toHaveCount(3);
   await expect(page.getByRole("link", { name: /^Open source:/ }).first()).toBeVisible();
   await expect(page.getByRole("button", { name: "Saved" })).toBeVisible();
 

@@ -94,6 +94,108 @@ function RadioduransGlyph() {
   );
 }
 
+function AntifreezeFishGlyph() {
+  const iceCrystals = [
+    { cx: 74, cy: 70 },
+    { cx: 292, cy: 82 },
+    { cx: 266, cy: 204 },
+  ];
+
+  return (
+    <>
+      <path d="M62 132 C101 83 204 75 275 121 C302 139 302 158 276 176 C207 224 102 200 62 152 C54 143 54 139 62 132 Z" fill="rgba(143,247,214,0.07)" stroke="rgba(143,247,214,0.86)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M276 122 C317 99 336 117 347 151 C325 148 305 157 276 177" fill="rgba(143,247,214,0.045)" stroke="rgba(143,247,214,0.75)" strokeLinejoin="round" strokeWidth="3" />
+      <path d="M118 104 C154 130 197 132 237 105 M116 168 C154 146 202 146 241 171" stroke="rgba(237,234,226,0.34)" strokeLinecap="round" strokeWidth="3" />
+      <path d="M128 78 L116 45 M163 71 L165 38 M197 76 L212 43 M92 193 L76 223 M141 202 L132 235 M199 201 L212 232" stroke="rgba(217,168,92,0.68)" strokeLinecap="round" strokeWidth="3" />
+      <circle cx="121" cy="125" fill="var(--ctenophore)" r="5" />
+      <path d="M156 127 C177 111 201 141 223 125" stroke="rgba(217,168,92,0.78)" strokeLinecap="round" strokeWidth="3" />
+      {iceCrystals.map((crystal) => (
+        <g key={`${crystal.cx}-${crystal.cy}`} stroke="rgba(143,247,214,0.58)" strokeLinecap="round" strokeWidth="2">
+          <path d={`M${crystal.cx - 13} ${crystal.cy} L${crystal.cx + 13} ${crystal.cy}`} />
+          <path d={`M${crystal.cx} ${crystal.cy - 13} L${crystal.cx} ${crystal.cy + 13}`} />
+          <path d={`M${crystal.cx - 9} ${crystal.cy - 9} L${crystal.cx + 9} ${crystal.cy + 9}`} />
+          <path d={`M${crystal.cx + 9} ${crystal.cy - 9} L${crystal.cx - 9} ${crystal.cy + 9}`} />
+        </g>
+      ))}
+    </>
+  );
+}
+
+function HorseshoeLalGlyph() {
+  return (
+    <>
+      <path d="M90 153 C86 89 128 57 181 57 C234 57 276 90 270 154 C267 195 231 219 181 219 C131 219 93 195 90 153 Z" fill="rgba(143,247,214,0.07)" stroke="rgba(143,247,214,0.86)" strokeWidth="4" />
+      <path d="M116 148 C128 119 151 104 181 104 C211 104 234 119 246 148 M122 175 C151 160 211 160 239 175" stroke="rgba(237,234,226,0.34)" strokeLinecap="round" strokeWidth="3" />
+      <path d="M181 218 L181 242 M102 164 C75 172 52 189 38 214 M260 164 C288 172 311 189 324 214" stroke="rgba(217,168,92,0.72)" strokeLinecap="round" strokeWidth="3" />
+      <path d="M132 81 C112 66 91 57 69 54 M231 81 C251 66 271 57 294 54 M146 57 L139 36 M216 57 L224 36" stroke="rgba(143,247,214,0.5)" strokeLinecap="round" strokeWidth="3" />
+      <path d="M57 94 C77 105 88 121 92 143 M305 94 C285 105 274 121 270 143" stroke="rgba(143,247,214,0.52)" strokeLinecap="round" strokeWidth="3" />
+      <circle cx="164" cy="132" fill="var(--ctenophore)" r="4" />
+      <circle cx="198" cy="132" fill="var(--ctenophore)" r="4" />
+      <path d="M150 31 C133 49 134 66 151 77 C168 65 168 48 150 31 Z" fill="rgba(217,168,92,0.15)" stroke="rgba(217,168,92,0.82)" strokeLinejoin="round" strokeWidth="3" />
+      <path d="M212 31 C195 49 196 66 213 77 C230 65 230 48 212 31 Z" fill="rgba(217,168,92,0.15)" stroke="rgba(217,168,92,0.82)" strokeLinejoin="round" strokeWidth="3" />
+      <path d="M150 95 L181 116 L212 95" stroke="rgba(217,168,92,0.7)" strokeLinecap="round" strokeDasharray="4 7" strokeWidth="2" />
+    </>
+  );
+}
+
+function MimivirusGlyph() {
+  const spikes = [
+    "M181 34 L181 11",
+    "M181 238 L181 215",
+    "M78 135 L50 135",
+    "M312 135 L284 135",
+    "M108 62 L88 42",
+    "M254 208 L273 228",
+    "M255 62 L275 42",
+    "M107 208 L88 228",
+  ];
+
+  return (
+    <>
+      {spikes.map((spike) => (
+        <path d={spike} key={spike} stroke="rgba(217,168,92,0.68)" strokeLinecap="round" strokeWidth="3" />
+      ))}
+      <path d="M181 37 L259 83 L259 174 L181 219 L102 174 L102 83 Z" fill="rgba(143,247,214,0.065)" stroke="rgba(143,247,214,0.86)" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M181 37 L181 219 M102 83 L259 174 M259 83 L102 174" stroke="rgba(237,234,226,0.24)" strokeLinecap="round" strokeWidth="2" />
+      <path d="M145 91 C168 75 204 76 226 94 C245 110 247 139 229 159 C206 184 158 183 135 157 C115 134 121 108 145 91 Z" fill="rgba(143,247,214,0.1)" stroke="rgba(143,247,214,0.58)" strokeWidth="3" />
+      <path d="M145 124 C163 110 183 139 202 124 C216 113 231 130 238 145 M133 149 C151 165 174 139 195 157 C211 171 226 164 237 153" fill="none" stroke="rgba(217,168,92,0.72)" strokeLinecap="round" strokeWidth="3" />
+      <circle cx="181" cy="135" fill="var(--ctenophore)" r="7" />
+      {[126, 156, 207, 236].map((cx, index) => (
+        <circle cx={cx} cy={index % 2 === 0 ? 104 : 178} fill="rgba(143,247,214,0.54)" key={cx} r="4" />
+      ))}
+    </>
+  );
+}
+
+function ElectricEelGlyph() {
+  return (
+    <>
+      <path d="M44 151 C90 96 133 94 178 130 C215 159 245 161 319 94" fill="none" stroke="rgba(143,247,214,0.88)" strokeLinecap="round" strokeWidth="15" />
+      <path d="M58 150 C101 110 135 115 172 143 C209 171 253 157 307 110" fill="none" stroke="rgba(6,9,12,0.76)" strokeLinecap="round" strokeWidth="5" />
+      <path d="M295 96 L340 74 L323 119 Z" fill="rgba(143,247,214,0.08)" stroke="rgba(143,247,214,0.82)" strokeLinejoin="round" strokeWidth="3" />
+      <circle cx="291" cy="102" fill="var(--ctenophore)" r="4" />
+      <path d="M117 61 L94 112 L135 107 L113 171 L177 88 L138 94 L154 49 Z" fill="rgba(217,168,92,0.13)" stroke="rgba(217,168,92,0.86)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+      <path d="M209 52 L191 91 L224 88 L204 137 L258 73 L227 78 L238 46 Z" fill="rgba(217,168,92,0.1)" stroke="rgba(217,168,92,0.72)" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
+      <path d="M70 205 C96 185 119 222 145 202 C170 183 190 220 216 202 C237 187 260 203 282 189" stroke="rgba(237,234,226,0.35)" strokeLinecap="round" strokeWidth="2" />
+      <path d="M61 86 C85 69 103 88 126 71 M238 192 C261 175 284 195 306 175" stroke="rgba(143,247,214,0.42)" strokeLinecap="round" strokeDasharray="4 8" strokeWidth="2" />
+    </>
+  );
+}
+
+function ThermogenicFlowerGlyph() {
+  return (
+    <>
+      <path d="M180 62 C139 62 100 91 86 132 C111 124 143 133 165 158 C174 134 179 99 180 62 Z" fill="rgba(143,247,214,0.06)" stroke="rgba(143,247,214,0.78)" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M181 62 C222 62 261 91 275 132 C250 124 218 133 196 158 C187 134 182 99 181 62 Z" fill="rgba(143,247,214,0.06)" stroke="rgba(143,247,214,0.78)" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M107 138 C126 185 160 215 181 226 C201 215 235 185 254 138 C229 153 207 177 181 222 C154 177 132 153 107 138 Z" fill="rgba(143,247,214,0.075)" stroke="rgba(143,247,214,0.86)" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M181 45 C202 73 207 122 196 166 C192 184 188 202 181 222 C173 202 169 184 165 166 C154 122 160 73 181 45 Z" fill="rgba(217,168,92,0.16)" stroke="rgba(217,168,92,0.86)" strokeLinejoin="round" strokeWidth="4" />
+      <path d="M151 46 C129 28 133 12 153 2 M211 46 C233 28 229 12 209 2 M132 75 C102 66 92 47 106 28 M230 75 C260 66 270 47 256 28" stroke="rgba(217,168,92,0.62)" strokeLinecap="round" strokeWidth="3" />
+      <path d="M181 94 C191 109 191 135 181 153 C171 135 171 109 181 94 Z" fill="rgba(237,234,226,0.22)" stroke="rgba(237,234,226,0.45)" strokeWidth="2" />
+      <path d="M125 218 C146 204 163 229 181 214 C199 229 216 204 237 218" stroke="rgba(143,247,214,0.42)" strokeLinecap="round" strokeDasharray="5 8" strokeWidth="2" />
+    </>
+  );
+}
+
 function renderGlyph(silhouette: string) {
   if (silhouette === "enzyme") {
     return <EnzymeGlyph />;
@@ -109,6 +211,26 @@ function renderGlyph(silhouette: string) {
 
   if (silhouette === "radiodurans") {
     return <RadioduransGlyph />;
+  }
+
+  if (silhouette === "antifreeze-fish") {
+    return <AntifreezeFishGlyph />;
+  }
+
+  if (silhouette === "horseshoe-lal") {
+    return <HorseshoeLalGlyph />;
+  }
+
+  if (silhouette === "mimivirus") {
+    return <MimivirusGlyph />;
+  }
+
+  if (silhouette === "electric-eel") {
+    return <ElectricEelGlyph />;
+  }
+
+  if (silhouette === "thermogenic-flower") {
+    return <ThermogenicFlowerGlyph />;
   }
 
   return <AxolotlGlyph />;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { MetadataStrip } from "@/components/MetadataStrip";
 import { ReadMarker } from "@/components/ReadMarker";
+import { RelatedSpecimens } from "@/components/RelatedSpecimens";
 import { SaveSpecimenButton } from "@/components/SaveSpecimenButton";
 import { SharePanel } from "@/components/SharePanel";
 import { SourceEvidencePanel } from "@/components/SourceEvidencePanel";
@@ -48,6 +49,7 @@ export default async function SpecimenPage({ params }: SpecimenPageProps) {
 
   const specimenNumber = getSpecimenNumber(specimen);
   const specimenLabel = `SPECIMEN ${String(specimenNumber).padStart(3, "0")}`;
+  const allSpecimens = getAllSpecimens();
 
   return (
     <main className="min-h-screen bg-[var(--abyss)] text-[var(--bone)]">
@@ -100,6 +102,7 @@ export default async function SpecimenPage({ params }: SpecimenPageProps) {
               ))}
             </div>
           </div>
+          <RelatedSpecimens specimen={specimen} specimens={allSpecimens} />
           <SourceEvidencePanel specimen={specimen} />
           <SharePanel specimen={specimen} />
         </div>
